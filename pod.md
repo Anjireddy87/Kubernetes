@@ -41,25 +41,83 @@ A **Pod** consists of the following key components:
   - **Pending → Running → Succeeded/Failed**
 - The **restart policy** (`Always`, `OnFailure`, `Never`) defines how Kubernetes restarts containers inside a pod.
 ### **7. pod commands**
---sh 
-kubectl get pod --all-namespaces
---
-- it display all running pods in all namespaces
 
---sh
+Here’s a breakdown of each **kubectl** command you listed:
+
+---
+
+### **1. List all Pods in all namespaces**
+```sh
+kubectl get pod --all-namespaces
+```
+- Shows all **pods** running across all **namespaces**.
+- Useful for troubleshooting issues in the entire cluster.
+
+---
+
+### **2. Deploy an Nginx Pod in the `prob` Namespace**
+```sh
 kubectl run nginx-demo --image=nginx --port=80 --namespace=prob
---
--it is used to create a pod in the desired namespace
-**--sh**
+```
+- Creates a new **pod** named `nginx-demo` in the **`prob`** namespace.
+- Uses the **Nginx** image.
+- Exposes port **80** (internally, not as a service).
+
+---
+
+### **3. Get All Pods in a Specific Namespace**
+```sh
 kubectl get pod -n <namespace>
-**--sh**
+```
+Example:
+```sh
+kubectl get pod -n prob
+```
+- Lists all pods running in the **`prob`** namespace.
+
+---
+
+### **4. Get Pod Details (Including Node & IP)**
+```sh
 kubectl get pod -n <namespace> -o wide
-**--sh**
+```
+Example:
+```sh
+kubectl get pod -n prob -o wide
+```
+- Shows additional details such as:
+  - **Node** the pod is running on.
+  - **Pod IP Address**.
+  - **Container Image**.
+
+---
+
+### **5. Describe a Pod (Detailed View)**
+```sh
 kubectl describe po nginx-demo
-**--sh**
+```
+- Displays **detailed information** about the `nginx-demo` pod, including:
+  - Events (e.g., scheduling, restarts, errors).
+  - Node it’s running on.
+  - Container details (image, ports, environment variables).
+
+---
+
+### **6. View Logs of a Running Pod**
+```sh
 kubectl logs nginx-demo
-**--sh**
+```
+- Fetches logs from the **main container** in the `nginx-demo` pod.
+
+---
+
+### **7. Stream Live Logs (Follow Mode)**
+```sh
 kubectl logs -f nginx-demo
+```
+- **`-f` (follow mode)** keeps streaming logs in real-time.
+- Useful for **monitoring live activity**.
+
 ---
 
 ## **Example Pod YAML**

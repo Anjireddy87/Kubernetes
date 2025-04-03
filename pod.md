@@ -137,4 +137,72 @@ spec:
         - containerPort: 80
 ```
 
-Would you like more details on any of these components? 🚀
+### **Kubernetes Pod Lifecycle - Step by Step**  
+
+This is the **flow of a pod request** from creation to execution in Kubernetes:
+
+---
+
+### **1. Create a Pod Using a Local YAML Definition File**
+```sh
+kubectl apply -f my-pod.yaml
+```
+- This sends a **request** to the **API Server**.
+- Example Pod YAML (`my-pod.yaml`):
+  ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: my-nginx
+  spec:
+    containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+          - containerPort: 80
+  ```
+
+---
+
+### **2. API Server Saves Pod Info in ETCD**  
+- The **API Server** processes the request and **validates** it.  
+- The pod's **desired state** is stored in **ETCD**, the cluster’s key-value store.  
+- The pod is now in a **Pending state**.
+
+---
+
+### **3. Scheduler Assigns the Pod to a Node**
+- The **Kube Scheduler**:
+  - Detects the **unscheduled pod** in ETCD.
+  - Finds a **suitable node** based on resources, affinity, and constraints.
+  - Schedules the pod to a **specific node**.
+
+---
+
+### **4. Kubelet on the Node Handles the Pod**
+- The **Kubelet** on the assigned node detects the pod.
+- It **communicates with the container runtime** (e.g., Docker, containerd).
+- It downloads the **container image** and **creates** the container.
+
+---
+
+### **5. Pod's Lifecycle is Stored in ETCD**
+- The **entire pod state** (running, stopped, failed) is updated in ETCD.
+- **Kubelet** continuously monitors the pod.
+- If the pod crashes and **restartPolicy: Always** is set, the pod restarts.
+
+---
+
+### **Bonus: Verify the Pod’s Status**
+- Check pod status:
+  ```sh
+  kubectl get pods
+  ```
+- Check detailed pod events:
+  ```sh
+  kubectl describe pod my-nginx
+  ```
+
+---
+
+

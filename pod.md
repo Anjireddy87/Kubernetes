@@ -45,22 +45,21 @@ A **Pod** consists of the following key components:
 kubectl get pod --all-namespaces
 --
 - it display all running pods in all namespaces
+
 --sh
 kubectl run nginx-demo --image=nginx --port=80 --namespace=prob
 --
 -it is used to create a pod in the desired namespace
-
---sh
+**--sh**
 kubectl get pod -n <namespace>
---sh
+**--sh**
 kubectl get pod -n <namespace> -o wide
---sh
+**--sh**
 kubectl describe po nginx-demo
---sh
+**--sh**
 kubectl logs nginx-demo
---sh
+**--sh**
 kubectl logs -f nginx-demo
-
 ---
 
 ## **Example Pod YAML**

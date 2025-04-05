@@ -98,4 +98,87 @@ The pod eviction was caused due to a **lack of ephemeral storage** on the node. 
 
 ---
 
-Would you like me to help convert this into a Markdown file for download? Or do you want a template you can reuse for other cases too?
+Thanks! The key info here is:
+
+```
+State:        Terminated  
+Reason:       Error  
+Exit Code:    143
+```
+
+---
+
+### 🔍 What Does **Exit Code 143** Mean?
+
+**Exit code `143`** = The container was **terminated by SIGTERM (signal 15)**.  
+This usually means:
+
+- **The pod was killed gracefully** by Kubernetes
+- Possibly due to a **manual deletion**, a **node issue**, or **resource constraints** (CPU, memory, disk)
+- OR it's part of a **crash loop** and being restarted repeatedly
+
+---
+
+### ✅ Next Steps to Diagnose
+
+#### 1. **Check Pod Events**
+Run:
+```bash
+kubectl describe pod <pod-name>
+```
+Scroll down to the **Events** section — look for anything like:
+- `Killing container with id...`
+- `OOMKilled`
+- `Back-off restarting failed container`
+
+---
+
+#### 2. **Check Logs**
+Run:
+```bash
+kubectl logs <pod-name>
+```
+You’ll likely see the **real reason** the process was terminated (e.g., an app-level crash, out-of-memory error, etc.)
+
+---
+
+#### 3. **Check for Resource Limits**
+Look at your YAML — do you have this?
+```yaml
+resources:
+  limits:
+    memory: "128Mi"
+```
+If your container is using more memory than allowed, it might be getting killed.
+
+---
+
+#### 4. **Is It Restarting in a Loop?**
+Run:
+```bash
+kubectl get pod <pod-name>
+```
+Check the `RESTARTS` column. If it’s going up, the pod is stuck in a crash loop.
+
+---
+
+### ✏️ Fix Ideas
+
+| Problem                     | Fix                                                  |
+|----------------------------|------------------------------------------------------|
+| App crashes / bad config   | Check logs, update config or fix code                |
+| OOMKilled (memory issue)   | Increase memory limits in your YAML                  |
+| Disk issues                | Verify `df -h`, clean up space again if needed       |
+| Persistent crash loop      | Temporarily remove liveness/readiness probes         |
+
+---
+
+If you paste the output of:
+```bash
+kubectl describe pod <your-pod-name>
+```
+and/or:
+```bash
+kubectl logs <your-pod-name>
+```
+I can give you a more targeted fix. Want to do that?

@@ -1,4 +1,6 @@
 That’s a great idea! You’ve encountered a **real-world issue** with your Jenkins pod getting **evicted due to low ephemeral storage** — a common problem in Kubernetes environments. Here’s a nicely structured **case study/documentation** format you can use in a `.md` file or knowledge base.
+---
+
 
 ---
 

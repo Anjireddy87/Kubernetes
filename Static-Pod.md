@@ -33,16 +33,18 @@ Look for `--pod-manifest-path`, which shows where static pod manifests are store
 ### **Step 2: Create a Static Pod YAML File**
 Save this file on the node inside `/etc/kubernetes/manifests/`:
 ```yaml
-apiVersion: v1
+apiVersion: v1  
 kind: Pod
 metadata:
-  name: static-nginx
-spec:
+  name: nginx-static
+  Labels:
+   app: nginx
+spec: 
   containers:
-  - name: nginx
-    image: nginx
-    ports:
-    - containerPort: 80
+    - name: nginx-static
+      image: nginx
+      ports:
+       - containerPort: 80
 ```
 
 ### **Step 3: Verify the Static Pod**

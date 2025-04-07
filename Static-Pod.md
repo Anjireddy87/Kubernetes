@@ -53,7 +53,15 @@ Run:
 kubectl get pods -A
 ```
 You should see your pod running.
+```sh
 
+NAMESPACE     NAME                                       READY   STATUS    RESTARTS      AGE
+default       nginx-static-ip-192-168-1-86               1/1     Running   0             60s
+kube-system   coredns-7c65d6cfc9-4p8hz                   1/1     Running   2 (10h ago)   4d20h
+kube-system   coredns-7c65d6cfc9-m7gd2                   1/1     Running   2 (10h ago)   4d20h
+kube-system   etcd-ip-192-168-1-203                      1/1     Running   2 (10h ago)   4d20h
+kube-system   kube-apiserver-ip-192-168-1-203            1/1     Running   2 (10h ago)   4d20h
+---
 ### **Step 4: Delete the Static Pod**
 To remove a static pod, **delete the manifest file** from the node:
 ```sh

@@ -57,7 +57,6 @@ Great question! 🙌 Let’s break down **why we move from ReplicaSet to Deploym
 
 ---
 
-Let me know if you’d like a **visual comparison diagram** too — I can make that for you real quick!
 
 
 
@@ -128,4 +127,3 @@ Would you like me to:
 - Help you test/apply this YAML?
 - Generate a visual diagram for the Deployment?
 
-Let me know how you want to proceed!
